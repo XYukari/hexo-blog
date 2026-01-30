@@ -54,103 +54,103 @@ int ask(int p, int l, int r, int k) {
 
 ```cpp
 struct seg {
-	int l, r;
-	int vmax, vmaxh, vsec, mxcnt, sum;
-	int tmax, telse, tmaxh, telseh;
+    int l, r;
+    int vmax, vmaxh, vsec, mxcnt, sum;
+    int tmax, telse, tmaxh, telseh;
 } t[MAXN << 2];
 #define ls p << 1
 #define rs p << 1 | 1
 #define mid ((t[p].l + t[p].r) >> 1)
 
 void refresh(int p) {
-	t[p].vmax = max(t[ls].vmax, t[rs].vmax);
-	t[p].vmaxh = max(t[ls].vmaxh, t[rs].vmaxh);
-	t[p].sum = t[ls].sum + t[rs].sum;
-	if (t[ls].vmax == t[rs].vmax) {
-		t[p].vsec = max(t[ls].vsec, t[rs].vsec);
-		t[p].mxcnt = t[ls].mxcnt + t[rs].mxcnt;
-	} else if (t[ls].vmax > t[rs].vmax) {
-		t[p].vsec = max(t[ls].vsec, t[rs].vmax);
-		t[p].mxcnt = t[ls].mxcnt;
-	} else {
-		t[p].vsec = max(t[ls].vmax, t[rs].vsec);
-		t[p].mxcnt = t[rs].mxcnt;
-	}
+    t[p].vmax = max(t[ls].vmax, t[rs].vmax);
+    t[p].vmaxh = max(t[ls].vmaxh, t[rs].vmaxh);
+    t[p].sum = t[ls].sum + t[rs].sum;
+    if (t[ls].vmax == t[rs].vmax) {
+        t[p].vsec = max(t[ls].vsec, t[rs].vsec);
+        t[p].mxcnt = t[ls].mxcnt + t[rs].mxcnt;
+    } else if (t[ls].vmax > t[rs].vmax) {
+        t[p].vsec = max(t[ls].vsec, t[rs].vmax);
+        t[p].mxcnt = t[ls].mxcnt;
+    } else {
+        t[p].vsec = max(t[ls].vmax, t[rs].vsec);
+        t[p].mxcnt = t[rs].mxcnt;
+    }
 }
 void build(int p, int l, int r) {
-	t[p].l = l, t[p].r = r;
-	if (l == r) {
-		cin >> t[p].vmaxh;
-		t[p].sum = t[p].vmax = t[p].vmaxh;
-		t[p].vsec = -INF;
-		t[p].mxcnt = 1;
-		return;
-	}
-	build(ls, l, mid), build(rs, mid + 1, r);
-	refresh(p);
+    t[p].l = l, t[p].r = r;
+    if (l == r) {
+        cin >> t[p].vmaxh;
+        t[p].sum = t[p].vmax = t[p].vmaxh;
+        t[p].vsec = -INF;
+        t[p].mxcnt = 1;
+        return;
+    }
+    build(ls, l, mid), build(rs, mid + 1, r);
+    refresh(p);
 }
 void addtag(int p, int tmax, int tmaxh, int telse, int telseh) {
-	t[p].sum += t[p].mxcnt * tmax + (t[p].r - t[p].l + 1 - t[p].mxcnt) * telse;
-	t[p].vmaxh = max(t[p].vmaxh, t[p].vmax + tmaxh);
-	t[p].tmaxh = max(t[p].tmaxh, t[p].tmax + tmaxh);
-	t[p].telseh = max(t[p].telseh, t[p].telse + telseh);
-	t[p].vmax += tmax;
-	t[p].tmax += tmax;
-	t[p].telse += telse;
-	if (t[p].vsec != -INF) t[p].vsec += telse;
+    t[p].sum += t[p].mxcnt * tmax + (t[p].r - t[p].l + 1 - t[p].mxcnt) * telse;
+    t[p].vmaxh = max(t[p].vmaxh, t[p].vmax + tmaxh);
+    t[p].tmaxh = max(t[p].tmaxh, t[p].tmax + tmaxh);
+    t[p].telseh = max(t[p].telseh, t[p].telse + telseh);
+    t[p].vmax += tmax;
+    t[p].tmax += tmax;
+    t[p].telse += telse;
+    if (t[p].vsec != -INF) t[p].vsec += telse;
 }
 void pushdown(int p) {
-	int tmp = max(t[ls].vmax, t[rs].vmax);
-	if (t[ls].vmax == tmp) addtag(ls, t[p].tmax, t[p].tmaxh, t[p].telse, t[p].telseh);
-	else addtag(ls, t[p].telse, t[p].telseh, t[p].telse, t[p].telseh);
-	if (t[rs].vmax == tmp) addtag(rs, t[p].tmax, t[p].tmaxh, t[p].telse, t[p].telseh);
-	else add_tag(rs, t[p].telse, t[p].telseh, t[p].telse, t[p].telseh);
-	t[p].tmax = t[p].tmaxh = t[p].telse = t[p].telseh = 0;
+    int tmp = max(t[ls].vmax, t[rs].vmax);
+    if (t[ls].vmax == tmp) addtag(ls, t[p].tmax, t[p].tmaxh, t[p].telse, t[p].telseh);
+    else addtag(ls, t[p].telse, t[p].telseh, t[p].telse, t[p].telseh);
+    if (t[rs].vmax == tmp) addtag(rs, t[p].tmax, t[p].tmaxh, t[p].telse, t[p].telseh);
+    else add_tag(rs, t[p].telse, t[p].telseh, t[p].telse, t[p].telseh);
+    t[p].tmax = t[p].tmaxh = t[p].telse = t[p].telseh = 0;
 }
 void cadd(int p, int l, int r, int val) {
-	if (l <= t[p].l && t[p].r <= r) {
-		add_tag(p, val, val, val, val);
-		return;
-	}
-	pushdown(p);
-	if (l <= mid) cadd(ls, l, r, val);
-	if (r > mid) cadd(rs, l, r, val);
-	refresh(p);
+    if (l <= t[p].l && t[p].r <= r) {
+        add_tag(p, val, val, val, val);
+        return;
+    }
+    pushdown(p);
+    if (l <= mid) cadd(ls, l, r, val);
+    if (r > mid) cadd(rs, l, r, val);
+    refresh(p);
 }
 void cmin(int p, int l, int r, int val) {
-	if (val >= t[p].vmax) return;
-	if (l <= t[p].l && t[p].r <= r && val > t[p].vsec) {
-		add_tag(p, val - t[p].vmax, val - t[p].vmax, 0, 0);
-		return;
-	}
-	pushdown(p);
-	if (l <= mid) cmin(ls, l, r, val);
-	if (r > mid) cmin(rs, l, r, val);
-	refresh(p);
+    if (val >= t[p].vmax) return;
+    if (l <= t[p].l && t[p].r <= r && val > t[p].vsec) {
+        add_tag(p, val - t[p].vmax, val - t[p].vmax, 0, 0);
+        return;
+    }
+    pushdown(p);
+    if (l <= mid) cmin(ls, l, r, val);
+    if (r > mid) cmin(rs, l, r, val);
+    refresh(p);
 }
 int qsum(int p, int l, int r) {
-	if (l <= t[p].l && t[p].r <= r) return t[p].sum;
-	pushdown(p);
-	int ans = 0;
-	if (l <= mid) ans += qsum(ls, l, r);
-	if (r > mid) ans += qsum(rs, l, r);
-	return ans;
+    if (l <= t[p].l && t[p].r <= r) return t[p].sum;
+    pushdown(p);
+    int ans = 0;
+    if (l <= mid) ans += qsum(ls, l, r);
+    if (r > mid) ans += qsum(rs, l, r);
+    return ans;
 }
 int qmax(int p, int l, int r) {
-	if (l <= t[p].l && t[p].r <= r) return t[p].vmax;
-	pushdown(p);
-	int ans = -INF;
-	if (l <= mid) ans = max(ans, qmax(ls, l, r));
-	if (r > mid) ans = max(ans, qmax(rs, l, r));
-	return ans;
+    if (l <= t[p].l && t[p].r <= r) return t[p].vmax;
+    pushdown(p);
+    int ans = -INF;
+    if (l <= mid) ans = max(ans, qmax(ls, l, r));
+    if (r > mid) ans = max(ans, qmax(rs, l, r));
+    return ans;
 }
 int qmaxh(int p, int l, int r) {
-	if (l <= t[p].l && t[p].r <= r) return t[p].vmaxh;
-	pushdown(p);
-	int ans = -INF;
-	if (l <= mid) ans = max(ans, qmaxh(ls, l, r));
-	if (r > mid) ans = max(ans, qmaxh(rs, l, r));
-	return ans;
+    if (l <= t[p].l && t[p].r <= r) return t[p].vmaxh;
+    pushdown(p);
+    int ans = -INF;
+    if (l <= mid) ans = max(ans, qmaxh(ls, l, r));
+    if (r > mid) ans = max(ans, qmaxh(rs, l, r));
+    return ans;
 }
 ```
 
@@ -225,28 +225,28 @@ a[++cnt].init(x0, y0, x1, y1), change(1, x0, x1, cnt);
 struct segtree { int ls, rs, sum; } t[N << 5];
 // 初始化rt[0]=build(1,n)为离散化后的值域
 int build(int l, int r) {
-	int p = ++tot;
-	if (l == r) return p;
-	int mid = l + r >> 1;
-	t[p].ls = build(l, mid), t[p].rs = build(mid + 1, r);
-	return root;
+    int p = ++tot;
+    if (l == r) return p;
+    int mid = l + r >> 1;
+    t[p].ls = build(l, mid), t[p].rs = build(mid + 1, r);
+    return root;
 }
 //插入rt[i]=update(x,1,n,rt[i-1])
 int update(int x, int l, int r, int o) {
-	int p = ++tot;
-	t[p] = t[o], t[p].sum++;
-	if (l == r) return dir;
-	int mid = l + r >> 1;
-	if (x <= mid) t[p].ls = update(x, l, mid, t[p].ls);
-	else t[p].rs = update(x, mid + 1, r, t[p].rs);
-	return p;
+    int p = ++tot;
+    t[p] = t[o], t[p].sum++;
+    if (l == r) return dir;
+    int mid = l + r >> 1;
+    if (x <= mid) t[p].ls = update(x, l, mid, t[p].ls);
+    else t[p].rs = update(x, mid + 1, r, t[p].rs);
+    return p;
 }
 //查询query(rt[l-1],rt[r],1,n,k)
 int query(int p, int q, int l, int r, int k) {
-	if (l == r) return l;
-	int mid = l + r >> 1, x = t[t[q].ls].sum - t[t[p].ls].sum;
-	if (k <= x) return query(t[p].ls, t[q].ls, l, mid, k);
-	else return query(t[p].rs, t[q].rs, mid + 1, r, k - x);
+    if (l == r) return l;
+    int mid = l + r >> 1, x = t[t[q].ls].sum - t[t[p].ls].sum;
+    if (k <= x) return query(t[p].ls, t[q].ls, l, mid, k);
+    else return query(t[p].rs, t[q].rs, mid + 1, r, k - x);
 }
 ```
 
@@ -1013,15 +1013,15 @@ void tarjan(int u)
 
 ```cpp
 for (int i = 2; i <= n; i++) {
-	if (!isPrime[i]){
-		prime[++cnt] = i;
-	}
-	for (int j = 1; j <= cnt && i * prime[j] <= n; j++){
-		isPrime[i * prime[j]] = 1;
-		if (i % prime[j] == 0){
-			break;
-		}
-	}
+    if (!isPrime[i]){
+        prime[++cnt] = i;
+    }
+    for (int j = 1; j <= cnt && i * prime[j] <= n; j++){
+        isPrime[i * prime[j]] = 1;
+        if (i % prime[j] == 0){
+            break;
+        }
+    }
 }
 ```
 
@@ -1041,32 +1041,32 @@ T exgcd(T a, T b, T &x, T &y) {
 
 template<class T>
 T mul(T a, T b, T mod) {
-	a = (a % mod + mod) % mod;
-	b = (b % mod + mod) % mod;
-	T ans = 0;
-	while (b != 0) {
-		if ((b & 1) != 0) {
-			ans = (ans + a) % mod;
-		}
-		a = (a + a) % mod;
-		b >>= 1;
-	}
-	return ans;
+    a = (a % mod + mod) % mod;
+    b = (b % mod + mod) % mod;
+    T ans = 0;
+    while (b != 0) {
+        if ((b & 1) != 0) {
+            ans = (ans + a) % mod;
+        }
+        a = (a + a) % mod;
+        b >>= 1;
+    }
+    return ans;
 }
 
 template<class T>
 T excrt(vector<T> &m, vector<T> &r) {
-	T tail = 0, lcm = 1, tmp, b, c, x0, x, y, d;
-	for (int i = 0;i < m.size();i++) {
-		b = m[i]; c = ((r[i] - tail) % b + b) % b;
-		d = exgcd(lcm, b, x, y);
-		if (c % d != 0) return -1;
-		x0 = mul(x, c / d, b / d);
-		tmp = lcm * (b / d);
-		tail = (tail + mul(x0, lcm, tmp)) % tmp;
-		lcm = tmp;
-	}
-	return tail;
+    T tail = 0, lcm = 1, tmp, b, c, x0, x, y, d;
+    for (int i = 0;i < m.size();i++) {
+        b = m[i]; c = ((r[i] - tail) % b + b) % b;
+        d = exgcd(lcm, b, x, y);
+        if (c % d != 0) return -1;
+        x0 = mul(x, c / d, b / d);
+        tmp = lcm * (b / d);
+        tail = (tail + mul(x0, lcm, tmp)) % tmp;
+        lcm = tmp;
+    }
+    return tail;
 }
 ```
 
@@ -1093,33 +1093,33 @@ T exgcd(T a, T b, T &x, T &y) {
 }
 template<class T>
 void exgcd(T a, T b, T c) {
-	T x, y, d = exgcd(a, b, x, y);
-	if (c % d != 0) {
-		cout << "Impossible" << endl;
-		return ;
-	}
-	x *= c / d, y *= c / d;
-	T p = b / d, q = a / d, k;
-	if (x < 0) {
-		k = ceil(1 - x, p);
-		x += p * k;
-		y -= q * k;
-	}
-	else if (x >= 0) { //将x提高到最小正整数
-		k = (x - 1) / p;
-		x -= p * k; //将x降低到最小正整数
-		y += q * k;
-	}
-	if (y > 0) { //有正整数解
-		cout << (y - 1) / q + 1 << endl; //将y减到1的方案数即为解的个数
-		cout << x << endl; //当前的x即为最小正整数x
-		cout << (y - 1) % q + 1 << endl; //将y取到最小正整数
-		cout << x + (y - 1) / q * p << endl; //将x提升到最大
-		cout << y << endl; //特解即为y最大值
-	} else { //无整数解
-		cout << x << endl; //当前的x即为最小的正整数x
-		cout << y + q * ceil(1 - y, q) << endl; //将y提高到正整数
-	}
+    T x, y, d = exgcd(a, b, x, y);
+    if (c % d != 0) {
+        cout << "Impossible" << endl;
+        return ;
+    }
+    x *= c / d, y *= c / d;
+    T p = b / d, q = a / d, k;
+    if (x < 0) {
+        k = ceil(1 - x, p);
+        x += p * k;
+        y -= q * k;
+    }
+    else if (x >= 0) { //将x提高到最小正整数
+        k = (x - 1) / p;
+        x -= p * k; //将x降低到最小正整数
+        y += q * k;
+    }
+    if (y > 0) { //有正整数解
+        cout << (y - 1) / q + 1 << endl; //将y减到1的方案数即为解的个数
+        cout << x << endl; //当前的x即为最小正整数x
+        cout << (y - 1) % q + 1 << endl; //将y取到最小正整数
+        cout << x + (y - 1) / q * p << endl; //将x提升到最大
+        cout << y << endl; //特解即为y最大值
+    } else { //无整数解
+        cout << x << endl; //当前的x即为最小的正整数x
+        cout << y + q * ceil(1 - y, q) << endl; //将y提高到正整数
+    }
 }
 ```
 
@@ -1128,10 +1128,10 @@ void exgcd(T a, T b, T c) {
 ```cpp
 template<class T>
 T qpow(T a, T b, T mod) {
-	T ans = 1;
-	for (;b;b >>= 1, a = a * a % mod)
-		if (b & 1) ans = ans * a % mod;
-	return ans;
+    T ans = 1;
+    for (;b;b >>= 1, a = a * a % mod)
+        if (b & 1) ans = ans * a % mod;
+    return ans;
 }
 
 template<class T>
@@ -1147,32 +1147,32 @@ T exgcd(T a, T b, T &x, T &y) {
 
 template<class T>
 T mul(T a, T b, T mod) {
-	a = (a % mod + mod) % mod;
-	b = (b % mod + mod) % mod;
-	T ans = 0;
-	while (b != 0) {
-		if ((b & 1) != 0) {
-			ans = (ans + a) % mod;
-		}
-		a = (a + a) % mod;
-		b >>= 1;
-	}
-	return ans;
+    a = (a % mod + mod) % mod;
+    b = (b % mod + mod) % mod;
+    T ans = 0;
+    while (b != 0) {
+        if ((b & 1) != 0) {
+            ans = (ans + a) % mod;
+        }
+        a = (a + a) % mod;
+        b >>= 1;
+    }
+    return ans;
 }
 
 template<class T>
 T excrt(vector<T> &m, vector<T> &r) {
-	T tail = 0, lcm = 1, tmp, b, c, x0, x, y, d;
-	for (int i = 0;i < m.size();i++) {
-		b = m[i]; c = ((r[i] - tail) % b + b) % b;
-		d = exgcd(lcm, b, x, y);
-		if (c % d != 0) return -1;
-		x0 = mul(x, c / d, b / d);
-		tmp = lcm * (b / d);
-		tail = (tail + mul(x0, lcm, tmp)) % tmp;
-		lcm = tmp;
-	}
-	return tail;
+    T tail = 0, lcm = 1, tmp, b, c, x0, x, y, d;
+    for (int i = 0;i < m.size();i++) {
+        b = m[i]; c = ((r[i] - tail) % b + b) % b;
+        d = exgcd(lcm, b, x, y);
+        if (c % d != 0) return -1;
+        x0 = mul(x, c / d, b / d);
+        tmp = lcm * (b / d);
+        tail = (tail + mul(x0, lcm, tmp)) % tmp;
+        lcm = tmp;
+    }
+    return tail;
 }
 
 const int MAXN = 4e4 + 10;
@@ -1180,20 +1180,20 @@ i64 fact[MAXN];
 
 template<class T>
 T inv(T a, T mod) {
-	return qpow(a, mod - 2, mod);
+    return qpow(a, mod - 2, mod);
 }
 
 template<class T>
 T C(T n, T m, T mod) {
-	if (n < m) return 0;
-	return fact[n] * inv(fact[m], mod) % mod * inv(fact[n - m], mod) % mod;
+    if (n < m) return 0;
+    return fact[n] * inv(fact[m], mod) % mod * inv(fact[n - m], mod) % mod;
 }
 
 template<class T>
 T lucas(T n, T m, T mod) {
-	if (n < m) return 0;
-	if (!n) return 1;
-	return lucas(n / mod, m / mod, mod) * C(n % mod, m % mod, mod) % mod;
+    if (n < m) return 0;
+    if (!n) return 1;
+    return lucas(n / mod, m / mod, mod) * C(n % mod, m % mod, mod) % mod;
 }
 ```
 
@@ -1406,3 +1406,14 @@ C(n,m)%2 = (n&m)==m
 F(n,m) = 有 n 个人 (0,1,2,..,n−1)，每次杀掉编号为(x + m) % n的人，最终的幸存者。
 F(n,m) = (F(n − 1, m) + m) % n
 ```
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
