@@ -5,10 +5,10 @@
 # Site
 title: Yukari's Blog
 subtitle: ""
-description: "Yukari 的个人博客"
+description: "Yukari's personal blog"
 keywords:
 author: Yukari
-language: zh-CN
+language: en
 timezone: ""
 
 # URL
@@ -65,7 +65,7 @@ index_generator:
   order_by: -date
 
 # Category & Tag
-default_category: uncategorized
+default_category: Uncategorized
 category_map:
 tag_map:
 

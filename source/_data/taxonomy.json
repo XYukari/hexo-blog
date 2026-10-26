@@ -1,0 +1,263 @@
+{
+  "languages": [
+    "en",
+    "zh-CN",
+    "ja"
+  ],
+  "categories": {
+    "Research": {
+      "slug": "research",
+      "aliases": [
+        "科研"
+      ]
+    },
+    "Programming": {
+      "slug": "programming",
+      "aliases": [
+        "技术"
+      ]
+    },
+    "Competitive Programming": {
+      "slug": "competitive-programming",
+      "aliases": [
+        "做题"
+      ]
+    }
+  },
+  "tags": {
+    "AVIS": {
+      "slug": "AVIS",
+      "aliases": []
+    },
+    "AVS": {
+      "slug": "AVS",
+      "aliases": []
+    },
+    "Algorithms": {
+      "slug": "algorithms",
+      "aliases": [
+        "算法",
+        "题解"
+      ]
+    },
+    "Bit Manipulation": {
+      "slug": "bit-manipulation",
+      "aliases": [
+        "位运算"
+      ]
+    },
+    "C": {
+      "slug": "c-language",
+      "aliases": [
+        "C语言"
+      ]
+    },
+    "C++": {
+      "slug": "cpp",
+      "aliases": []
+    },
+    "Codeforces": {
+      "slug": "Codeforces",
+      "aliases": []
+    },
+    "Data Structures": {
+      "slug": "data-structures",
+      "aliases": [
+        "数据结构"
+      ]
+    },
+    "Difference Arrays": {
+      "slug": "difference-arrays",
+      "aliases": [
+        "差分"
+      ]
+    },
+    "Greedy Algorithms": {
+      "slug": "greedy-algorithms",
+      "aliases": [
+        "贪心"
+      ]
+    },
+    "LLMs": {
+      "slug": "llms",
+      "aliases": [
+        "LLM"
+      ]
+    },
+    "LeetCode": {
+      "slug": "leetcode",
+      "aliases": [
+        "力扣"
+      ]
+    },
+    "LoRA": {
+      "slug": "LoRA",
+      "aliases": []
+    },
+    "Mathematics": {
+      "slug": "mathematics",
+      "aliases": [
+        "数学"
+      ]
+    },
+    "Multimodal Learning": {
+      "slug": "multimodal-learning",
+      "aliases": [
+        "多模态"
+      ]
+    },
+    "Prefix Sums": {
+      "slug": "prefix-sums",
+      "aliases": [
+        "前缀和"
+      ]
+    },
+    "Python": {
+      "slug": "Python",
+      "aliases": []
+    },
+    "RVOS": {
+      "slug": "RVOS",
+      "aliases": []
+    },
+    "Ref-AVS": {
+      "slug": "Ref-AVS",
+      "aliases": []
+    },
+    "SAM": {
+      "slug": "SAM",
+      "aliases": []
+    },
+    "Segment Trees": {
+      "slug": "segment-trees",
+      "aliases": [
+        "线段树"
+      ]
+    },
+    "VPO": {
+      "slug": "VPO",
+      "aliases": []
+    },
+    "Vision Transformers": {
+      "slug": "vision-transformers",
+      "aliases": [
+        "Transformer",
+        "ViT",
+        "Swin Transformer"
+      ]
+    },
+    "Web Development": {
+      "slug": "web-development",
+      "aliases": [
+        "前端"
+      ]
+    }
+  },
+  "legacy_routes": [
+    {
+      "path": "categories/技术/index.html",
+      "kind": "categories",
+      "name": "Programming"
+    },
+    {
+      "path": "categories/科研/index.html",
+      "kind": "categories",
+      "name": "Research"
+    },
+    {
+      "path": "categories/做题/index.html",
+      "kind": "categories",
+      "name": "Competitive Programming"
+    },
+    {
+      "path": "tags/前端/index.html",
+      "kind": "tags",
+      "name": "Web Development"
+    },
+    {
+      "path": "tags/多模态/index.html",
+      "kind": "tags",
+      "name": "Multimodal Learning"
+    },
+    {
+      "path": "tags/LLM/index.html",
+      "kind": "tags",
+      "name": "LLMs"
+    },
+    {
+      "path": "tags/算法/index.html",
+      "kind": "tags",
+      "name": "Algorithms"
+    },
+    {
+      "path": "tags/题解/index.html",
+      "kind": "tags",
+      "name": "Algorithms"
+    },
+    {
+      "path": "tags/差分/index.html",
+      "kind": "tags",
+      "name": "Difference Arrays"
+    },
+    {
+      "path": "tags/位运算/index.html",
+      "kind": "tags",
+      "name": "Bit Manipulation"
+    },
+    {
+      "path": "tags/Transformer/index.html",
+      "kind": "tags",
+      "name": "Vision Transformers"
+    },
+    {
+      "path": "tags/ViT/index.html",
+      "kind": "tags",
+      "name": "Vision Transformers"
+    },
+    {
+      "path": "tags/Swin-Transformer/index.html",
+      "kind": "tags",
+      "name": "Vision Transformers"
+    },
+    {
+      "path": "tags/C语言/index.html",
+      "kind": "tags",
+      "name": "C"
+    },
+    {
+      "path": "tags/C/index.html",
+      "kind": "tags",
+      "name": "C++"
+    },
+    {
+      "path": "tags/数据结构/index.html",
+      "kind": "tags",
+      "name": "Data Structures"
+    },
+    {
+      "path": "tags/贪心/index.html",
+      "kind": "tags",
+      "name": "Greedy Algorithms"
+    },
+    {
+      "path": "tags/力扣/index.html",
+      "kind": "tags",
+      "name": "LeetCode"
+    },
+    {
+      "path": "tags/前缀和/index.html",
+      "kind": "tags",
+      "name": "Prefix Sums"
+    },
+    {
+      "path": "tags/线段树/index.html",
+      "kind": "tags",
+      "name": "Segment Trees"
+    },
+    {
+      "path": "tags/数学/index.html",
+      "kind": "tags",
+      "name": "Mathematics"
+    }
+  ]
+}

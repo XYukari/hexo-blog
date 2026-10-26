@@ -1,0 +1,54 @@
+# Site-specific Fluid settings. Keep upstream defaults in themes/fluid/_config.yml.
+favicon: /images/site/avatar.jpg
+apple_touch_icon: /images/site/avatar.jpg
+web_analytics:
+  enable: true
+  leancloud:
+    app_id: htCgd1nqpl7eY5SU3aqYf3db-gzGzoHsz
+    app_key: BtCQV3zRTwUc3XGzul8ucGDY
+navbar:
+  blog_title: Yukari's Blog
+footer:
+  statistics:
+    enable: true
+    source: leancloud
+    pv_format: 'Total views: {}'
+    uv_format: 'Total visitors: {}'
+index:
+  slogan:
+    text: Research notes, programming, and algorithms.
+post:
+  meta:
+    views:
+      enable: true
+      source: leancloud
+      format: '{} views'
+    date:
+      format: YYYY-MM-DD HH:mm
+  math:
+    enable: true
+    specific: true
+    engine: mathjax
+  updated:
+    date_format: YYYY-MM-DD HH:mm
+  copyright:
+    post_date:
+      format: YYYY-MM-DD
+    update_date:
+      format: YYYY-MM-DD
+about:
+  name: Yukari
+  intro: True understanding comes from practice.
+  icons:
+    - class: iconfont icon-github-fill
+      link: https://github.com/XYukari
+      tip: GitHub
+    - class: iconfont icon-bilibili-fill
+      link: https://space.bilibili.com/266157608
+      tip: Bilibili
+    - class: iconfont icon-codeforces
+      link: https://codeforces.com/profile/XYukari
+      tip: Codeforces
+  avatar: /images/site/avatar.jpg
+links:
+  enable: false

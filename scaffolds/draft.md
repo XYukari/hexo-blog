@@ -1,4 +1,6 @@
 ---
 title: {{ title }}
-tags:
+lang: en
+categories: []
+tags: []
 ---

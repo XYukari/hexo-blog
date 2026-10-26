@@ -1,39 +1,37 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+## Project Structure
 
-This repository contains a Hexo 8 blog using the Fluid theme.
+This is a Hexo 8 blog using Fluid. Articles live in `source/_posts/`, with adjacent folders for article-specific images. Shared images and the personal avatar belong in `source/images/`. `scaffolds/` contains writing templates.
 
-- `source/_posts/`: Markdown articles; each article’s images belong in an adjacent folder with the same basename.
-- `source/about/index.md`: About page.
-- `scaffolds/`: Templates for new posts, pages, and drafts.
-- `themes/fluid/`: EJS layouts, JavaScript helpers, Stylus styles, translations, and theme assets.
-- `_config.yml`: Site settings and deployment configuration; `themes/fluid/_config.yml` controls theme features.
-- `public/`, `db.json`, and `.deploy_git/`: Generated output, cache, and deployment checkout; do not edit or commit them.
+Keep site settings in `_config.yml` and personal theme overrides in `_config.fluid.yml`. `themes/fluid/` contains upstream theme files plus the documented document-language fix in `layout/layout.ejs`. Avoid adding personal settings there.
 
-## Build, Test, and Development Commands
+`source/_data/taxonomy.json` is the shared vocabulary and archive-slug registry. `scripts/` enforces content policy and generates legacy archive redirects; `tools/` contains local checks and lossless image optimization.
 
-Use Node.js 24 LTS with npm; a global Hexo installation is unnecessary. Run commands from the repository root:
+Generated `public/`, `db.json`, `node_modules/`, `.deploy_git/`, and `.local-backups/` are ignored. Never edit generated pages or commit backups and deployment credentials.
 
-- `npm ci`: Install dependencies from `package-lock.json`.
-- `npm run server`: Start the local preview server.
-- `npm run build`: Generate the static site into `public/`.
-- `npm run clean`: Clear generated files and Hexo’s cache before rebuilding when output appears stale.
-- `npx hexo new post "Article-Title"`: Create an article using the post scaffold.
-- `npm run deploy`: Publish through the configured Git deployer. Run only when publication is explicitly requested.
+## Development Commands
 
-## Coding Style & Naming Conventions
+Use Node.js 24 LTS with npm. Run from the repository root:
 
-Use two-space indentation for YAML and theme code. Follow Fluid’s `.editorconfig` and `.eslintrc`: UTF-8, LF endings, single-quoted JavaScript strings, and semicolons. No root formatter or lint command is configured.
+- `npm ci`: Install locked dependencies.
+- `npx hexo new post "article-slug"`: Create an article and its asset folder.
+- `npm run server`: Preview locally.
+- `npm run check`: Validate article languages, categories, and tags.
+- `npm run clean && npm run build`: Rebuild the static site.
+- `npm run optimize:images`: Recompress PNG data losslessly, preserving dimensions and metadata.
+- `npm run deploy`: Publish generated pages via HTTPS, only when explicitly requested. Build first.
 
-Keep descriptive article filenames consistent with existing Chinese titles or hyphenated problem names, such as `CF1878D-Reverse-Madness.md`. Preserve YAML front matter with `title`, `date`, and relevant `category`/`tags`. Use fenced code blocks with language identifiers and keep image paths aligned with the article’s asset folder.
+## Writing, Languages, and Style
 
-## Testing Guidelines
+Use UTF-8, two-space indentation, and descriptive filenames. Follow Fluid's EditorConfig and ESLint conventions for theme code: single-quoted JavaScript strings and semicolons.
 
-No automated test suite or coverage threshold is configured. Run `npm run build` after changes and inspect affected pages with `npm run server`. Check images, links, code highlighting, math rendering, navigation, and mobile layout. For theme changes, inspect both an article and the homepage.
+The interface stays English. Set each article's `lang` to `en`, `zh-CN`, or `ja`; existing Chinese titles and prose remain Chinese. New scaffolds default to English. Select categories and tags from the vocabulary; extend that registry intentionally instead of creating near-duplicate labels. Select a category before building a new post.
 
-## Commit & Pull Request Guidelines
+Preserve published filenames, dates, and permalinks. Keep legacy redirects when changing taxonomy slugs. Use `math: true` for formulas; the theme loads MathJax centrally. Reference article images with `{% asset_img diagram.png %}` and provide meaningful descriptions in the article's language.
 
-History uses short, topic-focused subjects such as `add ViT&Swin` and `leetcode 3721`; no strict prefix convention is established. Keep commits focused and stage specific files to preserve unrelated work.
+## Validation and Contributions
 
-Pull requests should describe the affected posts or theme behavior, list validation performed, link relevant issues, and include screenshots for visual changes. Keep deployment keys and credentials out of commits.
+Run content checks and a clean build. Preview navigation, article images, formulas, and mobile layout; language changes must preserve English UI and correct article-language metadata. No coverage threshold is configured.
+
+Use short, focused commit subjects, following history. PRs should describe changes, list validation, link relevant issues, and include screenshots for visual changes. Keep unrelated edits out of commits.
