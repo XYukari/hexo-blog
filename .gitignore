@@ -9,3 +9,4 @@ public/
 _multiconfig.yml
 id_github_deploy
 id_github_deploy.pub
+.local-backups/
