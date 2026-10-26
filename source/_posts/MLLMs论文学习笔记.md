@@ -4,7 +4,8 @@ date: 2026-02-09 09:34:19
 categories:
     - 科研
 tags:
-    - 多模态大模型
+    - 多模态
+    - LLM
     - LoRA
     - RVOS
 ---

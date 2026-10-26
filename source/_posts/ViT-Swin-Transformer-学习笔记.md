@@ -1,7 +1,7 @@
 ---
 title: ViT & Swin Transformer 学习笔记
 date: 2026-03-05 15:31:47
-catagories:
+categories:
     - 科研
 tags:
     - Transformer
